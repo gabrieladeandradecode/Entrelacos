@@ -1,6 +1,6 @@
-## Entrelaços - Aplicativo fictício de encontros para adultos, em Java orientado a objetos (POO).
+# Entrelaços - Aplicativo fictício de encontros para adultos, em Java orientado a objetos (POO).
 
-# Conceitos postos em prática:
+## Conceitos postos em prática:
 SRP — Single Responsibility Principle: Perfil, Cadastro, Match, Mensagem, Plano..
 Proteção de atributos
 Polimorfismo: classe Plano serve de molde para que cada plano herde dela e sobrescreva o método de curtidas conforme o tipo (Essencial | Conexão).
