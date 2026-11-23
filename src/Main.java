@@ -12,12 +12,19 @@ public class Main {
 		//Lista lista = new Lista();
         
 		Cadastro cadastro = new Cadastro();
+		
+		cadastro.listaInteresses.add(new Interesse ("Música"));
+		cadastro.listaInteresses.add(new Interesse ("Cinema"));
+		cadastro.listaInteresses.add(new Interesse ("Esportes"));
+		cadastro.listaInteresses.add(new Interesse ("Tecnologia"));
+		cadastro.listaInteresses.add(new Interesse ("Leitura"));
+		cadastro.listaInteresses.add(new Interesse ("Culinária"));
                         
         while (opcaoTela != 3){
         	System.out.println("""
         			--- TELA INICIAL ---
         			1. Usuário existente
-        			2. Novo usuário
+        			2. Cadastrar usuário
         			3. Sair
         			""");
             
@@ -35,18 +42,21 @@ public class Main {
                 case 1:
                 	int opcaoMenu = 0;
                 	
-                    while (opcaoMenu != 4){
+                    while (opcaoMenu != 6){
                     	System.out.println("""
                     			--- MENU PRINCIPAL ---
-                    			1. Buscar perfis
-                    			2. Matches e conversas
-                    			3. Meu perfil
-                    			4. Voltar à tela inicial
+                    			1. Listar perfis
+                    			2. Pesquisar perfis por nome
+                    			3. Pesquisar perfis por nome e cidade
+                    			4. Matches e conversas
+                    			5. Meu perfil
+                    			6. Voltar à tela inicial
                     			Escolha uma opção: 
                     			""");
                     	try {
                     		System.out.println("Escolha uma opção: ");
                     		opcaoMenu = entrada.nextInt();
+                    		entrada.nextLine();
                     	} catch (InputMismatchException e) {
                     		System.out.println("Entrada inválida! Digite apenas números.");
                     		entrada.nextLine();
@@ -55,13 +65,24 @@ public class Main {
                         
                         switch (opcaoMenu) {                        	
                         	case 1:  
-                        		//lista.listarPerfis();
+                        		cadastro.listarPerfis();
                         		break;
                         	case 2:
+                        		System.out.println("Digite o nome a ser pesquisado: ");
+                        		String pesquisaNome = entrada.nextLine();
+                        		
+                        		cadastro.pesquisar(pesquisaNome);                        		
                         		break;
                         	case 3:
+                        		System.out.println("Digite o nome a ser pesquisado: ");
+                        		String pesquisasNome = entrada.nextLine();
+                        		
+                        		System.out.println("Digite o nome da cidade a ser pesquisada: ");                        		
+                        		String pesquisasCidade = entrada.nextLine();
+                        		
+                        		cadastro.pesquisar(pesquisasNome, pesquisasCidade);   
                         		break;                        		
-                        	case 4:
+                        	case 6:
                         		break;
                         		
                         	default:
@@ -133,11 +154,11 @@ public class Main {
 	    int opcaoPlano = entrada.nextInt();
 	    entrada.nextLine();
 	    
-	    do {	    	
+	    while (opcaoPlano != 1 && opcaoPlano != 2) {	    	// conferir espaços em brancos tambem 
 	    	System.out.println("Digite 1 ou 2!");
 	    	opcaoPlano = entrada.nextInt();
 	    	entrada.nextLine();
-	    } while (opcaoPlano != 1 && opcaoPlano != 2);
+	    }
 	    
 	    Plano plano ;
 	    if (opcaoPlano == 1) {
@@ -146,24 +167,29 @@ public class Main {
 	    	plano = new PlanoConexao();
 	    }
 
-	    /*System.out.println("Interesses (até 3): "); //\nCaso seja menor que 3, digite 0 para finalizar?
-	    System.out.println("1 Música   2 Cinema \n3 Esportes   4 Leitura  \n5 Viagem");
-	    int[] interesses = new int[3];
+	    System.out.println("Interesses (até 3): "); //\nCaso seja menor que 3, digite 0 para finalizar?
+	    //Interesse.exibirInteresses();
+	    //int[] interesses = new int[3];						// usar exception para tratar array?
+	    /*
 	    for (int i = 0; i < 3; i++){
 	        System.out.println("Número do interesse: ");
 	        interesses[i] = entrada.nextInt();
 	        /*interesse = entrada.nextInt();
 	        for (int j = 0; i < )
-	        if ()*/
-	    cadastro.cadastrar(nome, email, idade, cidade, plano);
+	        if ()	    
+	    //*/
+	   
+	    cadastro.cadastrar(nome, email, idade, cidade, plano, null);
 	    
 	    
+	} // fechamento do método cadastrar()
+	    
+	public static void pesquisar(Cadastro pesquisa) {
+		
 	}
 	    
-	    
-	    
 	        		
-}
+}	 // fechamento do Main()
 
 
 

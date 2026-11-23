@@ -1,24 +1,23 @@
 
 public class Perfil {
-    private static int contador = 0;
-    private int id;
-    private String nome;
-    private String email;
-    private int idade;
-    private String cidade;
-    private Plano plano;
-    public static final int MAX_INTERESSES = 3;
-    private Interesse[] interesses = new Interesse[MAX_INTERESSES];   
-    private int quantidadeInteresses;
+	public static final int MAX_INTERESSES = 3;
+	protected static int contador = 0;
+	protected int id;
+	protected String nome;
+	protected String email;
+	protected int idade;
+    protected String cidade;
+    protected Plano plano;    
+    protected Interesse[] interesses = new Interesse[MAX_INTERESSES];   
+    protected int quantidadeInteresses = 0;
     
-    public Perfil(String nome, String email, int idade, String cidade, Plano plano, Interesse[] interesses){
-        //this.id = contador++;
+    public Perfil(String nome, String email, int idade, String cidade, Plano plano){
+        this.id = contador++;
         this.nome = nome;
         this.email = email;
         this.idade = idade;
         this.cidade = cidade;
         this.plano = plano;
-        this.interesses = interesses;
     }
     
     public int getId() {
@@ -49,14 +48,7 @@ public class Perfil {
     	return interesses;
     }
     
-    public void adicionarInteresse(Interesse[] interesses) {
-    	for (int i = 0; i < MAX_INTERESSES && i < interesses.length; i++) {
-    		this.interesses[i] = interesses[i]; 
-    	}
-    	
-    	//3 posições verificando duplicidade.
-    }
-    
+        
     @Override
     public String toString() {
     	return """                

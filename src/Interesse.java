@@ -1,18 +1,37 @@
 
 public class Interesse {
 	
-	private static String[] interesses = {
-			"Música", "Cinema", "Esportes", "Tecnologia", "Leitura", "Culinária"
+	protected String nomeDoInteresse;
+		
+	
+	public Interesse(String nomeDoInteresse) {
+		this.nomeDoInteresse = nomeDoInteresse;
+	}
+    
+	public String getNomeDoInteresse() {
+		return nomeDoInteresse;
+	}
+	
+	protected static final Interesse[] CATALOGO_INTERESSES = {
+			new Interesse("Música"),
+			new Interesse("Cinema"),
+			new Interesse("Leitura"),
+			new Interesse("Esporte"),
+			new Interesse("Tecnologia"),
+			new Interesse("Culinária"),
+			new Interesse("Jardinagem"),
+			new Interesse("Religioso")			
 	};
 	
-	/*private Interesse() {
-    }*/
+	@Override
+	public String toString() {
+    	return """                                
+               - %s
+               """.formatted(nomeDoInteresse);
+    }
 	
-	public static void exibirInteresses() {
-		System.out.println("-- Catálogo de Interesses --");
-		for (int c = 0; c <= interesses.length; c++) {
-			System.out.println((c + 1) + " - " + interesses[c]);
-		}
-	}
-
+	
+	
+    
+	
 }
