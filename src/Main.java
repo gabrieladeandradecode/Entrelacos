@@ -8,17 +8,8 @@ public class Main {
 	public static void main(String[] args) {		
 						
 		int opcaoTela = 0;        
-		
-		//Lista lista = new Lista();
         
 		Cadastro cadastro = new Cadastro();
-		
-		cadastro.listaInteresses.add(new Interesse ("Música"));
-		cadastro.listaInteresses.add(new Interesse ("Cinema"));
-		cadastro.listaInteresses.add(new Interesse ("Esportes"));
-		cadastro.listaInteresses.add(new Interesse ("Tecnologia"));
-		cadastro.listaInteresses.add(new Interesse ("Leitura"));
-		cadastro.listaInteresses.add(new Interesse ("Culinária"));
                         
         while (opcaoTela != 3){
         	System.out.println("""
@@ -67,9 +58,10 @@ public class Main {
                         	case 1:  
                         		cadastro.listarPerfis();
                         		break;
-                        	case 2:
+                        	case 2:                        		
                         		System.out.println("Digite o nome a ser pesquisado: ");
                         		String pesquisaNome = entrada.nextLine();
+                        		System.out.println("--- LISTA DE PERFIS ---");
                         		
                         		cadastro.pesquisar(pesquisaNome);                        		
                         		break;
@@ -79,6 +71,7 @@ public class Main {
                         		
                         		System.out.println("Digite o nome da cidade a ser pesquisada: ");                        		
                         		String pesquisasCidade = entrada.nextLine();
+                        		System.out.println("--- LISTA DE PERFIS ---");
                         		
                         		cadastro.pesquisar(pesquisasNome, pesquisasCidade);   
                         		break;                        		
@@ -168,26 +161,24 @@ public class Main {
 	    }
 
 	    System.out.println("Interesses (até 3): "); //\nCaso seja menor que 3, digite 0 para finalizar?
-	    //Interesse.exibirInteresses();
+	    
+	    
 	    //int[] interesses = new int[3];						// usar exception para tratar array?
-	    /*
-	    for (int i = 0; i < 3; i++){
+	    
+	    for (int i = 0; i < CATA; i++){
 	        System.out.println("Número do interesse: ");
 	        interesses[i] = entrada.nextInt();
 	        /*interesse = entrada.nextInt();
 	        for (int j = 0; i < )
 	        if ()	    
-	    //*/
+	         */
+	    }
 	   
-	    cadastro.cadastrar(nome, email, idade, cidade, plano, null);
-	    
+	    cadastro.cadastrar(nome, email, idade, cidade, plano);
+	  //?System.out.println("0 = concluir interesses \nC = cancelar cadastro \nEnter = salvar perfil e entrar");
 	    
 	} // fechamento do método cadastrar()
-	    
-	public static void pesquisar(Cadastro pesquisa) {
-		
-	}
-	    
+	  	    
 	        		
 }	 // fechamento do Main()
 

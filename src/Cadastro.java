@@ -7,11 +7,15 @@ public class Cadastro {
 	
 	protected List<Perfil> listaPerfis = new ArrayList<>();
     
-	protected List<Interesse> listaInteresses = new ArrayList<>();
+	//protected List<Interesse> listaInteresses = new ArrayList<>();
+	
+	protected List<Curtida> curtidas = new ArrayList<>();
+	
+	protected List<Match> matches = new ArrayList<>();
 	
 	public static final int IDADE_MINIMA = 18;
-	
-	//public void adicionarInteresses - mas interesse tem que existir antes do cadstro
+		
+	boolean listaVazia = false;
 	
 	public boolean emailExistente(String email) {
 		for (Perfil perfil: listaPerfis) {
@@ -22,7 +26,7 @@ public class Cadastro {
 		return false;		
 	}
     																				
-	public void cadastrar(String nome, String email, int idade, String cidade, Plano plano, Interesse[] interesses) throws NegocioException {		
+	public void cadastrar(String nome, String email, int idade, String cidade, Plano plano) throws NegocioException {		
 
 		if (nome == null || nome.trim().isEmpty()){                            
 			throw new NegocioException("Nome não pode ser vazio!");
@@ -42,34 +46,31 @@ public class Cadastro {
 		
 		if (cidade == null || cidade.trim().isEmpty()){                            
 			throw new NegocioException("Cidade não pode ser vazio!");
-        }
-		
-        //System.out.println("0 = concluir interesses \nC = cancelar cadastro \nEnter = salvar perfil e entrar");
+        }				         
 
-        Perfil perfil = new Perfil(nome, email, idade, cidade, plano, interesses);
-
-        //listaPerfis.add(perfil);
+        Perfil perfil = new Perfil(nome, email, idade, cidade, plano);
+        
+        //interesses
+        
+        //perfil.adicionarInteresse(Interesse[] interesse);
+        
+        	//listaPerfis.add(perfil);
     }
 	
-	public boolean conferirListaVazia() {
-		if (listaPerfis.isEmpty()) {
-			System.out.println("Nenhum perfil cadastrado!\n");
-			return true;
-		}		
-		
-		return false;
+	public boolean conferirListaVazia() {		
+		return listaPerfis.isEmpty();
 	}
+	
 	/*
 	 * Sem System.out.println na regra de negócio: Os métodos 
-	 * listarPerfis() e pesquisar(...) estão imprimindo direto no 
-	 * console. Para cumprir "Separe o menu das regras em classes", 
+	 * listarPerfis() e pesquisar(...) estão imprimindo direto no console. Para cumprir "Separe o menu das regras em classes", 
 	 * o ideal é que esses métodos retornem uma List<Perfil> com os 
 	 * resultados, e o Main (menu) faça o for para imprimir na tela 
 	 * (ou avise que não encontrou ninguém).
 	 * */ 
 	
 	public void listarPerfis() {
-		System.out.println("--- LISTA DE PERFIS ---");
+		
 		if (conferirListaVazia()){
 			return;
 		}
@@ -80,6 +81,12 @@ public class Cadastro {
 			System.out.println(perfil);			
 		}				
 	}
+	
+	/*public List<Perfil> listarPerfis(){
+	 * return perfil;
+	 * 
+	 * 
+	 */
 	
 	public void pesquisar(String nome) {
 		if (conferirListaVazia()){
@@ -93,17 +100,58 @@ public class Cadastro {
 		}
 	}
 	
-	public void pesquisar(String nome, String cidade) {
+	public Perfil pesquisar(String nome, String cidade) {
 		if (conferirListaVazia()){
 			return;
 		};
 		
 		for (Perfil perfil: listaPerfis) {
 			if (perfil.getNome().equalsIgnoreCase(nome) && perfil.getCidade().equalsIgnoreCase(cidade)) {
-				System.out.println(perfil);
+				return perfil;
 			}						
 		}
 	}
+	
+	
+	
+	/*public void curtir(Perfil origem, Perfil destino) throws NegocioException {
+		if (origem.id == destino.id) {
+			throw new NegocioException("Não pode curtir a si mesmo.");
+		}
+			
+				
+	}
+	
+	private boolean conferirCurtida(Perfil origem, Perfil destino) {
+		for (Curtida curtida: curtidas) {
+			// if (curtidaRepetida.id == .id) verificar duplicidade
+			return true;
+		}
+		return false;
+		
+	}
+	
+	private int contarCurtidas(Perfil origem) {
+		int quantidade = 0;
+		for (Curtida curtida: curtidas) {
+			if (curtida.origem == origem) {
+				quantidade++;
+			}
+		}
+		return quantidade;
+	}
+	
+	public listarMatches() {
+		
+	}
+	
+	public enviarMensagem() {
+		
+	}
+	
+	public listarMensagens() {
+		
+	}*/*/
 		
 	
 }

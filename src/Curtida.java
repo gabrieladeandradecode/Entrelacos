@@ -1,7 +1,7 @@
 
 public class Curtida {
-	private Perfil origem;
-	private Perfil destino;
+	protected Perfil origem;
+	protected Perfil destino;
 	
 	public Curtida (Perfil origem, Perfil destino) {
 		this.origem = origem;

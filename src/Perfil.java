@@ -9,10 +9,11 @@ public class Perfil {
     protected String cidade;
     protected Plano plano;    
     protected Interesse[] interesses = new Interesse[MAX_INTERESSES];   
-    protected int quantidadeInteresses = 0;
+    protected int quantidadeInteresse = 0;
     
     public Perfil(String nome, String email, int idade, String cidade, Plano plano){
-        this.id = contador++;
+    	contador++;
+    	this.id = contador;
         this.nome = nome;
         this.email = email;
         this.idade = idade;
@@ -45,20 +46,50 @@ public class Perfil {
     }
     
     public Interesse[] getInteresses() {
-    	return interesses;
+    	return interesses.clone();
+    }
+    
+    public void adicionarInteresse(Interesse interesse) throws NegocioException {
+    	
+    	if (interesse == null) {
+    		throw new NegocioException("Nenhum interesse escolhido.");
+    	}
+    	
+    	for (int i = 0; i < quantidadeInteresse; i++) {    		
+    		
+    		if (interesses[i].getNomeDoInteresse().equalsIgnoreCase(interesse.getNomeDoInteresse())) {
+    			throw new NegocioException("Esse interesse já foi escolhido.");
+    		}
+    		
+    	}
+    	
+    	if (quantidadeInteresse >= MAX_INTERESSES) {
+			throw new NegocioException("Só pode escolher " + MAX_INTERESSES + " interesses.");
+		}
+		
+		interesses[quantidadeInteresse] = interesse;
+		quantidadeInteresse++;
     }
     
         
     @Override
     public String toString() {
+    	String textoInteresse = "";
+    	for (int i = 0; i < quantidadeInteresse; i++) {
+    	    textoInteresse += " - " + interesses[i].getNomeDoInteresse() + "\n";	//tirar \n devido a quebra de linha?
+    	}
+    	
     	return """                
-                --- PERFIL --- 
+               --- PERFIL --- 
                Nome: %s
                Email: %s
                Idade: %d
                Cidade: %s
                Plano: %s
-               --------------------""".formatted(nome, email, idade, cidade, plano);
+               Interesses: 
+               %s
+               --------------------""".formatted(nome, email, idade, cidade, plano, textoInteresse);    	
+    		// 
     }
     
 }   
