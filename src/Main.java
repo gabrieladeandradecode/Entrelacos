@@ -18,16 +18,8 @@ public class Main {
         			2. Cadastrar usuário
         			3. Sair
         			""");
-            
-        	try {
-        		System.out.println("Escolha uma opção: ");
-                opcaoTela = entrada.nextInt();
-        	} catch (InputMismatchException e) {
-        		System.out.println("Entrada inválida! Digite apenas números.");
-        		entrada.nextLine();
-        		continue;
-        	}            
-        	entrada.nextLine();
+        	
+            opcaoTela = lerInteiro("Escolha uma opção: ");
             
             switch (opcaoTela){
                 case 1:
@@ -44,15 +36,8 @@ public class Main {
                     			6. Voltar à tela inicial
                     			Escolha uma opção: 
                     			""");
-                    	try {
-                    		System.out.println("Escolha uma opção: ");
-                    		opcaoMenu = entrada.nextInt();
-                    		entrada.nextLine();
-                    	} catch (InputMismatchException e) {
-                    		System.out.println("Entrada inválida! Digite apenas números.");
-                    		entrada.nextLine();
-                    		continue;
-                    	}                      
+                    	
+                    	opcaoMenu = lerInteiro("Escolha uma opção: ");                    		            
                         
                         switch (opcaoMenu) {                        	
                         	case 1:  
@@ -61,7 +46,11 @@ public class Main {
                         	case 2:                        		
                         		System.out.println("Digite o nome a ser pesquisado: ");
                         		String pesquisaNome = entrada.nextLine();
-                        		System.out.println("--- LISTA DE PERFIS ---");
+                        		System.out.println("""
+                            			--- LISTA DE PERFIS ---
+                            			
+                            			
+                            			""");
                         		
                         		cadastro.pesquisar(pesquisaNome);                        		
                         		break;
@@ -71,7 +60,11 @@ public class Main {
                         		
                         		System.out.println("Digite o nome da cidade a ser pesquisada: ");                        		
                         		String pesquisasCidade = entrada.nextLine();
-                        		System.out.println("--- LISTA DE PERFIS ---");
+                        		System.out.println("""
+                            			--- LISTA DE PERFIS ---
+                            			
+                            			
+                            			""");
                         		
                         		//cadastro.pesquisar(pesquisasNome, pesquisasCidade);   
                         		break;                        		
@@ -128,9 +121,7 @@ public class Main {
 		return inteiro;		
 	}
 		
-	private static void cadastrar(Cadastro cadastro) throws NegocioException {
-		int idade = 0;
-        boolean idadeString = true; 	    
+	private static void cadastrar(Cadastro cadastro) throws NegocioException {		  
 	    
 		System.out.println("TELA DE CADASTRO");   
 	    
@@ -138,18 +129,9 @@ public class Main {
 	    String nome = entrada.nextLine();        	    
             
         System.out.println("E-mail: ");
-        String email = entrada.nextLine();       
-                
-        while (idadeString) {
-        	System.out.println("Idade (mínimo 18): ");
-    	    String idadeDigitada = entrada.nextLine();    	    
-    	    try {
-    	    	idade = Integer.parseInt(idadeDigitada);
-    	    	idadeString = false;    	    	
-    	    } catch (NumberFormatException e) {
-    	    	System.out.println("Entrada inválida! Digite números.");    	    	
-    	    }    	
-        }    
+        String email = entrada.nextLine();     
+        
+	    int idade = lerInteiro("Idade (mínimo 18): ");   
 	    
         System.out.println("Cidade: ");
         String cidade = entrada.nextLine();	                               
@@ -157,16 +139,12 @@ public class Main {
 	    System.out.println("""
     			Plano
     			1. Essencial
-    			2. Conexão
-    			Escolha o plano e digite 1 ou 2:
+    			2. Conexão    			
     			""");
-	    int opcaoPlano = entrada.nextInt();
-	    entrada.nextLine();
+	    int opcaoPlano = lerInteiro("Escolha o plano e digite 1 ou 2:");
 	    
-	    while (opcaoPlano != 1 && opcaoPlano != 2) {	    	// conferir espaços em brancos tambem 
-	    	System.out.println("Digite 1 ou 2!");
-	    	opcaoPlano = entrada.nextInt();
-	    	entrada.nextLine();
+	    while (opcaoPlano != 1 && opcaoPlano != 2) {
+	    	opcaoPlano = lerInteiro("Digite 1 ou 2!");
 	    }
 	    
 	    Plano plano ;
@@ -174,19 +152,11 @@ public class Main {
 	    	plano = new PlanoEssencial("Essencial");
 	    } else {
 	    	plano = new PlanoConexao("Conexão");
-	    }
-
-	    //\nCaso seja menor que 3, digite 0 para finalizar?
-	    	    
-	    int[] interesses = new int[3];						// usar exception para tratar array?
-	    
-	    for (int i = 0; i < interesses.length; i++){
-	        
-	        interesses[i] = entrada.nextInt();	       
-	    }
+	    }	    
 	   
-	    cadastro.cadastrar(nome, email, idade, cidade, plano);
-	  //?System.out.println("0 = concluir interesses");
+	    Perfil perfil = cadastro.cadastrar(nome, email, idade, cidade, plano);
+	    	    
+	    escolherInteresses(cadastro, perfil);
 	    
 	} // fechamento do método cadastrar()
 	
@@ -200,8 +170,7 @@ public class Main {
 				System.out.println((i+1) + " - " + Interesse.getInteresse(i));
 			}
 			
-			System.out.println("Digite 0 para terminar."); 
-			numero = entrada.nextInt();
+			numero = lerInteiro("Digite 0 para terminar.");
 			
 			if(numero >= 1 && numero <= Interesse.quantidadeInteresseCatalogo()) {
 				try {
