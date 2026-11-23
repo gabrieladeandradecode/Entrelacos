@@ -6,8 +6,6 @@ import java.util.List;
 public class Cadastro {
 	
 	protected List<Perfil> listaPerfis = new ArrayList<>();
-    
-	//protected List<Interesse> listaInteresses = new ArrayList<>();
 	
 	protected List<Curtida> curtidas = new ArrayList<>();
 	
@@ -32,12 +30,12 @@ public class Cadastro {
 			throw new NegocioException("Nome não pode ser vazio!");
 		}
 		
-		if (!Validacao.validacaoEmail(email)){
-			throw new NegocioException("Email inválido!");
+		if (!ValidacaoEmail.validacaoEmail(email)){
+			throw new NegocioException("Email inválido! Exemplo de email válido: nome@gmail.com");
 		}
 		
 		if (emailExistente(email)) {
-			throw new NegocioException("Email não pode se repetir.");		//verificar validacao de email, que tá aceitando qualquer letra e nao confere @
+			throw new NegocioException("Esse email já existe.");
 		}
 		
 		if (idade < IDADE_MINIMA) {

@@ -1,109 +1,125 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
 	
 	static Scanner entrada = new Scanner(System.in);
 	
-	public static void main(String[] args) {		
-						
-		int opcaoTela = 0;        
-        
-		Cadastro cadastro = new Cadastro();
-                        
-        while (opcaoTela != 3){
-        	System.out.println("""
-        			--- TELA INICIAL ---
-        			1. Usuário existente
-        			2. Cadastrar usuário
-        			3. Sair
-        			""");
-        	
-            opcaoTela = lerInteiro("Escolha uma opção: ");
-            
-            switch (opcaoTela){
-                case 1:
-                	int opcaoMenu = 0;
-                	
-                    while (opcaoMenu != 6){
-                    	System.out.println("""
-                    			--- MENU PRINCIPAL ---
-                    			1. Listar perfis
-                    			2. Pesquisar perfis por nome
-                    			3. Pesquisar perfis por nome e cidade
-                    			4. Matches e conversas
-                    			5. Meu perfil
-                    			6. Voltar à tela inicial
-                    			Escolha uma opção: 
-                    			""");
-                    	
-                    	opcaoMenu = lerInteiro("Escolha uma opção: ");                    		            
-                        
-                        switch (opcaoMenu) {                        	
-                        	case 1:  
-                        		cadastro.listarPerfis();
-                        		break;
-                        	case 2:                        		
-                        		System.out.println("Digite o nome a ser pesquisado: ");
-                        		String pesquisaNome = entrada.nextLine();
-                        		System.out.println("""
-                            			--- LISTA DE PERFIS ---
-                            			
-                            			
-                            			""");
-                        		
-                        		cadastro.pesquisar(pesquisaNome);                        		
-                        		break;
-                        	case 3:
-                        		System.out.println("Digite o nome a ser pesquisado: ");
-                        		String pesquisasNome = entrada.nextLine();
-                        		
-                        		System.out.println("Digite o nome da cidade a ser pesquisada: ");                        		
-                        		String pesquisasCidade = entrada.nextLine();
-                        		System.out.println("""
-                            			--- LISTA DE PERFIS ---
-                            			
-                            			
-                            			""");
-                        		
-                        		//cadastro.pesquisar(pesquisasNome, pesquisasCidade);   
-                        		break;                        		
-                        	case 6:
-                        		break;
-                        		
-                        	default:
-                        		System.out.println("Entrada inválida! Digite novamente uma opção dentre as apresentadas na Menu Inicial.");
-                        }
-                    }
-                    break;
-                    
-                case 2:
-					try {
-						cadastrar(cadastro);
-						System.out.println("Perfil cadastrado!");
-					} catch (NegocioException e) {
-						System.out.println(e.getMessage());
-					}
-                	/*try {
-                		
-                	} catch () {
-                		
-                	}*/
-                	
-                    break;
-                case 3:
-                    System.out.println("...Programa encerrado");
-                    break;
-                default:
-                    System.out.println("Entrada inválida! Digite novamente uma opção dentre as apresentadas na Tela Inicial.");
-
-            }   
-
-        }		
-		
-		
-        entrada.close();
+	
+	public static void main(String[] args) {
+	
+	    int opcaoTela = 0;
+	    int opcaoMenu = 0;
+	    
+	    Cadastro cadastro = new Cadastro();
+	
+	    while (opcaoTela != 3) {
+	
+	    	opcaoTela = menuTelaInicial();
+	
+	        switch (opcaoTela) {
+	
+	            case 1 -> {	                
+	
+	                while (opcaoMenu != 6) {		                    
+	
+	                    opcaoMenu = menuPrincipal();
+	
+	                    switch (opcaoMenu) {
+	
+	                        case 1 -> cadastro.listarPerfis();
+	
+	                        case 2 -> {
+	                            System.out.println("Digite o nome a ser pesquisado: ");
+	                            String pesquisaNome = entrada.nextLine();
+	
+	                            System.out.println("""
+	                                    --- LISTA DE PERFIS ---
+	                                    """);
+	
+	                            cadastro.pesquisar(pesquisaNome);
+	                        }
+	
+	                        case 3 -> {
+	                            System.out.println("Digite o nome a ser pesquisado: ");
+	                            String pesquisaNome = entrada.nextLine();
+	
+	                            System.out.println("Digite o nome da cidade a ser pesquisada: ");
+	                            String pesquisaCidade = entrada.nextLine();
+	
+	                            System.out.println("""
+	                                    --- LISTA DE PERFIS ---
+	                                    """);
+	
+	                            // cadastro.pesquisar(pesquisaNome, pesquisaCidade);
+	                        }
+	
+	                        case 4 -> {
+	                            System.out.println("Matches e conversas");
+	                            // Implementar funcionalidade
+	                        }
+	
+	                        case 5 -> {
+	                            System.out.println("Meu perfil");
+	                            // Implementar funcionalidade
+	                        }
+	
+	                        case 6 -> System.out.println("Voltando à tela inicial...");
+	
+	                        default -> System.out.println("Opção inválida! Tente novamente.");
+	                    }
+	                }
+	            }
+	
+	            case 2 -> {
+	                try {
+	                    cadastrar(cadastro);
+	                    System.out.println("Perfil cadastrado!");
+	
+	                } catch (NegocioException e) {
+	                    System.out.println(e.getMessage());
+	                }
+	            }
+	
+	            case 3 -> System.out.println("...Programa encerrado");
+	
+	            default -> System.out.println(
+	                    "Entrada inválida! Digite uma opção dentre as apresentadas na tela inicial."
+	            );
+	        }
+	    }
+	
+	    entrada.close();
 	}
+	
+	
+	public static int menuTelaInicial() {	
+		System.out.println("""
+                --- TELA INICIAL ---
+
+                1. Usuário existente
+                2. Cadastrar usuário
+                3. Sair
+                """);
+		
+		return lerInteiro("Escolha uma opção: ");			
+		
+	}
+	
+	public static int menuPrincipal() {
+		System.out.println("""
+                --- MENU PRINCIPAL ---
+
+                1. Listar perfis
+                2. Pesquisar perfis por nome
+                3. Pesquisar perfis por nome e cidade
+                4. Matches e conversas
+                5. Meu perfil
+                6. Voltar à tela inicial
+                """);
+		
+		return lerInteiro("Escolha uma opção: ");
+	}
+	
 	
 	private static int lerInteiro(String mensagem) {
 		boolean invalido = true; 
@@ -120,6 +136,7 @@ public class Main {
         }
 		return inteiro;		
 	}
+	
 		
 	private static void cadastrar(Cadastro cadastro) throws NegocioException {		  
 	    
@@ -134,7 +151,7 @@ public class Main {
 	    int idade = lerInteiro("Idade (mínimo 18): ");   
 	    
         System.out.println("Cidade: ");
-        String cidade = entrada.nextLine();	                               
+        String cidade = entrada.nextLine();	 	//!!conferir leitura de cidade só string, nao aceitar int                              
 
 	    System.out.println("""
     			Plano
@@ -159,6 +176,7 @@ public class Main {
 	    escolherInteresses(cadastro, perfil);
 	    
 	} // fechamento do método cadastrar()
+	
 	
 	public static void escolherInteresses(Cadastro cadastro, Perfil perfil) {
 		int numero = -1;				

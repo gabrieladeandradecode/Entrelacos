@@ -1,8 +1,7 @@
 
 public class Interesse {
 	
-	protected String nomeDoInteresse;
-		
+	protected String nomeDoInteresse;		
 	
 	public Interesse(String nomeDoInteresse) {
 		this.nomeDoInteresse = nomeDoInteresse;
@@ -25,11 +24,7 @@ public class Interesse {
 	
 	public static Interesse getInteresse(int posicao) {		
 		return CATALOGO_INTERESSES[posicao];
-	}
-	
-	/*public static Interesse[] getCatalogo() {
-		return CATALOGO_INTERESSES.clone();		
-	}*/
+	}	
 	
 	public static int quantidadeInteresseCatalogo() {
 		return CATALOGO_INTERESSES.length;		
@@ -38,10 +33,6 @@ public class Interesse {
 	@Override
 	public String toString() {
     	return (nomeDoInteresse);
-    }
-	
-	
-	
-    
+    }	
 	
 }
