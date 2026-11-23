@@ -26,7 +26,7 @@ public class Cadastro {
 		return false;		
 	}
     																				
-	public void cadastrar(String nome, String email, int idade, String cidade, Plano plano) throws NegocioException {		
+	public Perfil cadastrar(String nome, String email, int idade, String cidade, Plano plano) throws NegocioException {		
 
 		if (nome == null || nome.trim().isEmpty()){                            
 			throw new NegocioException("Nome não pode ser vazio!");
@@ -37,25 +37,26 @@ public class Cadastro {
 		}
 		
 		if (emailExistente(email)) {
-			throw new NegocioException("Email não pode se repetir.");		// testar email depois de corrigir interesses
+			throw new NegocioException("Email não pode se repetir.");		//verificar validacao de email, que tá aceitando qualquer letra e nao confere @
 		}
 		
 		if (idade < IDADE_MINIMA) {
-			throw new NegocioException("Idade mínima para se cadastrar é de 18 anos.");
+			throw new NegocioException("Idade mínima para se cadastrar é de " + IDADE_MINIMA + ".");
 	    }
 		
 		if (cidade == null || cidade.trim().isEmpty()){                            
-			throw new NegocioException("Cidade não pode ser vazio!");
+			throw new NegocioException("Cidade não pode ser vazia!");
         }				         
 
-        Perfil perfil = new Perfil(nome, email, idade, cidade, plano);
-        
-        //interesses
-        
-        //perfil.adicionarInteresse(Interesse[] interesse);
-        
-        	//listaPerfis.add(perfil);
+        Perfil perfil = new Perfil(nome, email, idade, cidade, plano);        
+                        
+        listaPerfis.add(perfil);
+        return perfil;
     }
+	
+	public void adicionarInteressePerfil(Perfil perfil, Interesse interesse) throws NegocioException {
+		perfil.adicionarInteresse(interesse);
+	}
 	
 	public boolean conferirListaVazia() {		
 		return listaPerfis.isEmpty();
@@ -78,7 +79,8 @@ public class Cadastro {
 		Collections.sort(listaPerfis, Comparator.comparing(Perfil::getNome));
 		
 		for (Perfil perfil: listaPerfis) {
-			System.out.println(perfil);			
+			System.out.println(perfil);
+			//return perfil;		?
 		}				
 	}
 	
@@ -101,15 +103,16 @@ public class Cadastro {
 	}
 	
 	public Perfil pesquisar(String nome, String cidade) {
-		if (conferirListaVazia()){
+		/*if (conferirListaVazia()){
 			return;
-		};
+		};*/
 		
 		for (Perfil perfil: listaPerfis) {
 			if (perfil.getNome().equalsIgnoreCase(nome) && perfil.getCidade().equalsIgnoreCase(cidade)) {
 				return perfil;
 			}						
 		}
+		return null;
 	}
 	
 	
@@ -151,7 +154,7 @@ public class Cadastro {
 	
 	public listarMensagens() {
 		
-	}*/*/
+	}*/
 		
 	
 }

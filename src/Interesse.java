@@ -23,11 +23,21 @@ public class Interesse {
 			new Interesse("Religioso")			
 	};
 	
+	public static Interesse getInteresse(int posicao) {		
+		return CATALOGO_INTERESSES[posicao];
+	}
+	
+	/*public static Interesse[] getCatalogo() {
+		return CATALOGO_INTERESSES.clone();		
+	}*/
+	
+	public static int quantidadeInteresseCatalogo() {
+		return CATALOGO_INTERESSES.length;		
+	}
+	
 	@Override
 	public String toString() {
-    	return """                                
-               - %s
-               """.formatted(nomeDoInteresse);
+    	return (nomeDoInteresse);
     }
 	
 	

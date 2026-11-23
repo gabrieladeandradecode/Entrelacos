@@ -73,7 +73,7 @@ public class Main {
                         		String pesquisasCidade = entrada.nextLine();
                         		System.out.println("--- LISTA DE PERFIS ---");
                         		
-                        		cadastro.pesquisar(pesquisasNome, pesquisasCidade);   
+                        		//cadastro.pesquisar(pesquisasNome, pesquisasCidade);   
                         		break;                        		
                         	case 6:
                         		break;
@@ -112,6 +112,22 @@ public class Main {
         entrada.close();
 	}
 	
+	private static int lerInteiro(String mensagem) {
+		boolean invalido = true; 
+		int inteiro = 0;
+		while (invalido) {
+        	System.out.println(mensagem);
+    	    String textoDigitado = entrada.nextLine();    	    
+    	    try {
+    	    	inteiro = Integer.parseInt(textoDigitado.trim());
+    	    	invalido = false; 
+    	    } catch (NumberFormatException e) {
+    	    	System.out.println("Entrada inválida! Digite números.");    	    	
+    	    }    	    	    
+        }
+		return inteiro;		
+	}
+		
 	private static void cadastrar(Cadastro cadastro) throws NegocioException {
 		int idade = 0;
         boolean idadeString = true; 	    
@@ -155,29 +171,51 @@ public class Main {
 	    
 	    Plano plano ;
 	    if (opcaoPlano == 1) {
-	    	plano = new PlanoEssencial();
+	    	plano = new PlanoEssencial("Essencial");
 	    } else {
-	    	plano = new PlanoConexao();
+	    	plano = new PlanoConexao("Conexão");
 	    }
 
-	    System.out.println("Interesses (até 3): "); //\nCaso seja menor que 3, digite 0 para finalizar?
+	    //\nCaso seja menor que 3, digite 0 para finalizar?
+	    	    
+	    int[] interesses = new int[3];						// usar exception para tratar array?
 	    
-	    
-	    //int[] interesses = new int[3];						// usar exception para tratar array?
-	    
-	    for (int i = 0; i < CATA; i++){
-	        System.out.println("Número do interesse: ");
-	        interesses[i] = entrada.nextInt();
-	        /*interesse = entrada.nextInt();
-	        for (int j = 0; i < )
-	        if ()	    
-	         */
+	    for (int i = 0; i < interesses.length; i++){
+	        
+	        interesses[i] = entrada.nextInt();	       
 	    }
 	   
 	    cadastro.cadastrar(nome, email, idade, cidade, plano);
-	  //?System.out.println("0 = concluir interesses \nC = cancelar cadastro \nEnter = salvar perfil e entrar");
+	  //?System.out.println("0 = concluir interesses");
 	    
 	} // fechamento do método cadastrar()
+	
+	public static void escolherInteresses(Cadastro cadastro, Perfil perfil) {
+		int numero = -1;				
+		
+		while (perfil.getQtdInteresse() < Perfil.MAX_INTERESSES && numero != 0) {
+			System.out.println("Número do interesse: ");
+			
+			for(int i = 0; i < Interesse.quantidadeInteresseCatalogo(); i++) {
+				System.out.println((i+1) + " - " + Interesse.getInteresse(i));
+			}
+			
+			System.out.println("Digite 0 para terminar."); 
+			numero = entrada.nextInt();
+			
+			if(numero >= 1 && numero <= Interesse.quantidadeInteresseCatalogo()) {
+				try {
+					cadastro.adicionarInteressePerfil(perfil, Interesse.getInteresse(numero - 1));
+				} catch (NegocioException e) {
+					System.out.println(e.getMessage());
+				}				
+			} else if (numero != 0) {
+				System.out.println("Entrada inválida!");
+			}			
+						
+		}
+				
+	}
 	  	    
 	        		
 }	 // fechamento do Main()

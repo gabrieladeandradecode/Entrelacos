@@ -49,11 +49,19 @@ public class Perfil {
     	return interesses.clone();
     }
     
+    public int getQtdInteresse() {
+    	return quantidadeInteresse;
+    }  
+    
     public void adicionarInteresse(Interesse interesse) throws NegocioException {
     	
     	if (interesse == null) {
     		throw new NegocioException("Nenhum interesse escolhido.");
     	}
+    	
+    	if (quantidadeInteresse >= MAX_INTERESSES) {
+			throw new NegocioException("Só pode escolher " + MAX_INTERESSES + " interesses.");
+		}
     	
     	for (int i = 0; i < quantidadeInteresse; i++) {    		
     		
@@ -61,12 +69,8 @@ public class Perfil {
     			throw new NegocioException("Esse interesse já foi escolhido.");
     		}
     		
-    	}
-    	
-    	if (quantidadeInteresse >= MAX_INTERESSES) {
-			throw new NegocioException("Só pode escolher " + MAX_INTERESSES + " interesses.");
-		}
-		
+    	}    	
+    			
 		interesses[quantidadeInteresse] = interesse;
 		quantidadeInteresse++;
     }
