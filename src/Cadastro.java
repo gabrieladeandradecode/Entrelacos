@@ -15,6 +15,7 @@ public class Cadastro {
 		
 	boolean listaVazia = false;
 	
+	
 	public boolean emailExistente(String email) {
 		for (Perfil perfil: listaPerfis) {
 			if (perfil.getEmail().equalsIgnoreCase(email)) {
@@ -23,6 +24,7 @@ public class Cadastro {
 		}
 		return false;		
 	}
+	
     																				
 	public Perfil cadastrar(String nome, String email, int idade, String cidade, Plano plano) throws NegocioException {		
 
@@ -52,61 +54,15 @@ public class Cadastro {
         return perfil;
     }
 	
+	
 	public void adicionarInteressePerfil(Perfil perfil, Interesse interesse) throws NegocioException {
 		perfil.adicionarInteresse(interesse);
 	}
 	
-	public boolean conferirListaVazia() {		
-		return listaPerfis.isEmpty();
-	}
 	
-	/*
-	 * Sem System.out.println na regra de negócio: Os métodos 
-	 * listarPerfis() e pesquisar(...) estão imprimindo direto no console. Para cumprir "Separe o menu das regras em classes", 
-	 * o ideal é que esses métodos retornem uma List<Perfil> com os 
-	 * resultados, e o Main (menu) faça o for para imprimir na tela 
-	 * (ou avise que não encontrou ninguém).
-	 * */ 
-	
-	public void listarPerfis() {
-		
-		if (conferirListaVazia()){
-			return;
-		}
-				
-		Collections.sort(listaPerfis, Comparator.comparing(Perfil::getNome));
-		
+	public Perfil buscarPorId(int id) {
 		for (Perfil perfil: listaPerfis) {
-			System.out.println(perfil);
-			//return perfil;		?
-		}				
-	}
-	
-	/*public List<Perfil> listarPerfis(){
-	 * return perfil;
-	 * 
-	 * 
-	 */
-	
-	public void pesquisar(String nome) {
-		if (conferirListaVazia()){
-			return;
-		};
-		
-		for (Perfil perfil: listaPerfis) {
-			if (perfil.getNome().equalsIgnoreCase(nome)) {
-				System.out.println(perfil);
-			}						
-		}
-	}
-	
-	public Perfil pesquisar(String nome, String cidade) {
-		/*if (conferirListaVazia()){
-			return;
-		};*/
-		
-		for (Perfil perfil: listaPerfis) {
-			if (perfil.getNome().equalsIgnoreCase(nome) && perfil.getCidade().equalsIgnoreCase(cidade)) {
+			if (perfil.getId() == id) {
 				return perfil;
 			}						
 		}
@@ -114,18 +70,84 @@ public class Cadastro {
 	}
 	
 	
+	public boolean conferirListaVazia() {		
+		return listaPerfis == null || listaPerfis.isEmpty();
+	}
 	
-	/*public void curtir(Perfil origem, Perfil destino) throws NegocioException {
+	
+	public List<Perfil> listarPerfis() {	// para todos usuários inclusive o selecionado
+				
+		if (conferirListaVazia()){
+			return Collections.emptyList();
+		}
+		
+		List<Perfil> copiaListaPerfis = new ArrayList<>(listaPerfis);
+				
+		Collections.sort(copiaListaPerfis, Comparator.comparing(Perfil::getNome, String.CASE_INSENSITIVE_ORDER));
+				
+		return copiaListaPerfis;			
+						
+	}
+	
+	public List<Perfil> listarOutrosPerfis(Perfil perfilId){	
+				
+		List<Perfil> copiaListaOutrosPerfis = new ArrayList<>(listaPerfis);
+		
+		copiaListaOutrosPerfis.removeIf(perfil -> perfil.getId() == perfilId.getId());
+		
+		Collections.sort(copiaListaOutrosPerfis, Comparator.comparing(Perfil::getNome, String.CASE_INSENSITIVE_ORDER));				
+		
+		return copiaListaOutrosPerfis;
+		
+	}
+	
+	
+	public List<Perfil> pesquisar(String nome) {
+				
+		if (conferirListaVazia()){
+			return Collections.emptyList();
+		};
+		
+		List<Perfil> listaNomes = new ArrayList<>();
+		
+		for (Perfil perfil: listaPerfis) {
+			if (perfil.getNome().equalsIgnoreCase(nome)) {
+				listaNomes.add(perfil);
+			}						
+		}
+		
+		return listaNomes;
+	}
+	
+	
+	public List<Perfil> pesquisar(String nome, String cidade) {
+		List<Perfil> listaNomesCidades = new ArrayList<>();
+		
+		if (conferirListaVazia()){
+			return Collections.emptyList();
+		};
+		
+		for (Perfil perfil: listaPerfis) {
+			if (perfil.getNome().equalsIgnoreCase(nome) && perfil.getCidade().equalsIgnoreCase(cidade)) {
+				listaNomesCidades.add(perfil);
+			}						
+		}
+		
+		return listaNomesCidades;
+	}
+	
+	
+	
+	public void curtir(Perfil origem, Perfil destino) throws NegocioException {
 		if (origem.id == destino.id) {
 			throw new NegocioException("Não pode curtir a si mesmo.");
-		}
-			
+		}		
 				
 	}
 	
 	private boolean conferirCurtida(Perfil origem, Perfil destino) {
-		for (Curtida curtida: curtidas) {
-			// if (curtidaRepetida.id == .id) verificar duplicidade
+		for (Curtida curtidaRepetida: curtidas) {
+			if (curtidaRepetida.id == .id) verificar duplicidade
 			return true;
 		}
 		return false;
@@ -142,7 +164,7 @@ public class Cadastro {
 		return quantidade;
 	}
 	
-	public listarMatches() {
+	/*public listarMatches() {
 		
 	}
 	

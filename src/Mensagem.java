@@ -1,8 +1,7 @@
 
 public class Mensagem {
-	int id;
-	private Perfil remetente;
-	private String texto;
+	protected Perfil remetente;
+	protected String texto;
 	
 	public Mensagem(Perfil remetente, String texto) {
 		this.remetente = remetente;
@@ -16,5 +15,12 @@ public class Mensagem {
 	public String getTexto() {
 		return texto;
 	}
+
+	@Override
+	public String toString() {
+		return "Mensagem [remetente=" + remetente + ", texto=" + texto + "]";
+	}
+	
+	
 
 }

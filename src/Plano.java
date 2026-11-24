@@ -11,5 +11,11 @@ public abstract class Plano {
 	}
 		
 	public abstract int limiteCurtidas();
+	
+	/*@Override
+	public String toString() {
+		return nome;
+		
+	}*/
 
 }

@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -7,80 +8,47 @@ public class Main {
 	
 	public static void main(String[] args) {
 	
-	    int opcaoTela = 0;
-	    int opcaoMenu = 0;
+	    int opcaoTela = -1;	    
 	    
 	    Cadastro cadastro = new Cadastro();
 	
-	    while (opcaoTela != 3) {
+	    while (opcaoTela != 0) {
 	
 	    	opcaoTela = menuTelaInicial();
 	
 	        switch (opcaoTela) {
-	
-	            case 1 -> {	                
-	
-	                while (opcaoMenu != 6) {		                    
-	
-	                    opcaoMenu = menuPrincipal();
-	
-	                    switch (opcaoMenu) {
-	
-	                        case 1 -> cadastro.listarPerfis();
-	
-	                        case 2 -> {
-	                            System.out.println("Digite o nome a ser pesquisado: ");
-	                            String pesquisaNome = entrada.nextLine();
-	
-	                            System.out.println("""
-	                                    --- LISTA DE PERFIS ---
-	                                    """);
-	
-	                            cadastro.pesquisar(pesquisaNome);
-	                        }
-	
-	                        case 3 -> {
-	                            System.out.println("Digite o nome a ser pesquisado: ");
-	                            String pesquisaNome = entrada.nextLine();
-	
-	                            System.out.println("Digite o nome da cidade a ser pesquisada: ");
-	                            String pesquisaCidade = entrada.nextLine();
-	
-	                            System.out.println("""
-	                                    --- LISTA DE PERFIS ---
-	                                    """);
-	
-	                            // cadastro.pesquisar(pesquisaNome, pesquisaCidade);
-	                        }
-	
-	                        case 4 -> {
-	                            System.out.println("Matches e conversas");
-	                            // Implementar funcionalidade
-	                        }
-	
-	                        case 5 -> {
-	                            System.out.println("Meu perfil");
-	                            // Implementar funcionalidade
-	                        }
-	
-	                        case 6 -> System.out.println("Voltando à tela inicial...");
-	
-	                        default -> System.out.println("Opção inválida! Tente novamente.");
-	                    }
-	                }
-	            }
-	
-	            case 2 -> {
-	                try {
+		        case 1 -> {
+		        	
+		        	try {
 	                    cadastrar(cadastro);
 	                    System.out.println("Perfil cadastrado!");
 	
 	                } catch (NegocioException e) {
 	                    System.out.println(e.getMessage());
 	                }
+		        	
+		        }
+		        
+	            case 2 -> {	   
+	            	
+	            	
+                	
+                	for (Perfil perfil: cadastro.listarPerfis()) {
+                		System.out.println(perfil.getId() + " - "+ perfil.getNome());
+                	}
+                	
+                	int id = lerInteiro("Digite o seu id de perfil: ");
+                	Perfil usuarioSelecionado = cadastro.buscarPorId(id);
+                	if (usuarioSelecionado == null) {
+                		System.out.println("Perfil não encontrado.");
+                		continue;
+                	}
+                	
+                	menuUsuario(cadastro, usuarioSelecionado);	
+	                
 	            }
 	
-	            case 3 -> System.out.println("...Programa encerrado");
+	            case 0 -> System.out.println("...Programa encerrado");
 	
 	            default -> System.out.println(
 	                    "Entrada inválida! Digite uma opção dentre as apresentadas na tela inicial."
@@ -92,38 +60,134 @@ public class Main {
 	}
 	
 	
-	public static int menuTelaInicial() {	
+	private static int menuTelaInicial() {	
 		System.out.println("""
                 --- TELA INICIAL ---
 
-                1. Usuário existente
-                2. Cadastrar usuário
-                3. Sair
+                1. Cadastrar perfil 
+                2. Entrar como usuário
+                0. Sair
                 """);
 		
 		return lerInteiro("Escolha uma opção: ");			
 		
 	}
 	
-	public static int menuPrincipal() {
+	private static int menuPrincipal() {
 		System.out.println("""
                 --- MENU PRINCIPAL ---
-
                 1. Listar perfis
                 2. Pesquisar perfis por nome
                 3. Pesquisar perfis por nome e cidade
-                4. Matches e conversas
-                5. Meu perfil
-                6. Voltar à tela inicial
+                4. Curtir alguém
+                5. Meus matches
+                6. Conversar
+                7. Meu perfil
+                0. Trocar de usuário
                 """);
 		
 		return lerInteiro("Escolha uma opção: ");
+		
 	}
 	
+	private static void menuUsuario(Cadastro cadastro, Perfil usuarioSelecionado) {
+		int opcaoMenu = -1;
+		
+		while (opcaoMenu != 0) {		         
+			System.out.println("\n Olá, " + usuarioSelecionado.getNome() + ".");
+			
+            opcaoMenu = menuPrincipal();
+
+            switch (opcaoMenu) {
+
+                case 1 -> {               	
+                	
+                	mostrarPerfis(cadastro.listarOutrosPerfis(usuarioSelecionado));                	
+                	                	                	
+                }
+                
+                case 2 -> {                	               	
+                	
+                    System.out.println("Digite o nome a ser pesquisado: ");
+                    String pesquisaNome = entrada.nextLine().trim();
+                    
+                    mostrarPerfis(cadastro.pesquisar(pesquisaNome));
+                }
+
+                case 3 -> {
+                	                	                	
+                    System.out.println("Digite o nome a ser pesquisado: ");
+                    String pesquisaNome = entrada.nextLine().trim();
+
+                    System.out.println("Digite o nome da cidade a ser pesquisada: ");
+                    String pesquisaCidade = entrada.nextLine().trim();
+                    
+                    
+                    mostrarPerfis(cadastro.pesquisar(pesquisaNome, pesquisaCidade));
+                }
+                
+                case 4 -> {
+                	System.out.println("Curtir");
+                	//curtirPerfil(Cadastro, usuarioSelecionado);
+                }
+
+                case 5 -> {
+                    System.out.println("Matches");
+                    // Implementar funcionalidade
+                }
+                
+                case 6 -> {
+                	System.out.println("Conversar");
+                	conversar();
+                }
+
+                case 7 -> {
+                    System.out.println(usuarioSelecionado);
+                }
+
+                case 0 -> System.out.println("Voltando à tela inicial...");
+
+                default -> System.out.println("Opção inválida! Tente novamente.");
+            }
+        }
+		
+		
+		
+	}	
 	
+	private static void mostrarPerfis(List<Perfil> listaPerfis) {
+		
+		if (listaPerfis.isEmpty()){
+    		System.out.println("Nenhum resultado.");
+    		return;
+    	} 
+		
+		System.out.println("""
+                --- LISTA DE PERFIS ---
+                """);
+		
+		for (Perfil perfil : listaPerfis) {
+			System.out.println(perfil);
+		}				
+		
+	}
+	
+
+	private static void curtirPerfil() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private static void conversar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	private static int lerInteiro(String mensagem) {
 		boolean invalido = true; 
 		int inteiro = 0;
+		
 		while (invalido) {
         	System.out.println(mensagem);
     	    String textoDigitado = entrada.nextLine();    	    
@@ -134,6 +198,7 @@ public class Main {
     	    	System.out.println("Entrada inválida! Digite números.");    	    	
     	    }    	    	    
         }
+		
 		return inteiro;		
 	}
 	
@@ -175,10 +240,10 @@ public class Main {
 	    	    
 	    escolherInteresses(cadastro, perfil);
 	    
-	} // fechamento do método cadastrar()
+	} 
 	
 	
-	public static void escolherInteresses(Cadastro cadastro, Perfil perfil) {
+	private static void escolherInteresses(Cadastro cadastro, Perfil perfil) {
 		int numero = -1;				
 		
 		while (perfil.getQtdInteresse() < Perfil.MAX_INTERESSES && numero != 0) {
