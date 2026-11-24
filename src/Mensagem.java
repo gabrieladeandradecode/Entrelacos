@@ -18,9 +18,7 @@ public class Mensagem {
 
 	@Override
 	public String toString() {
-		return "Mensagem [remetente=" + remetente + ", texto=" + texto + "]";
-	}
+		return "\nMensagem: \n" + remetente.getNome() + ": " + texto;
+	}	
 	
-	
-
 }

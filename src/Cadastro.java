@@ -5,17 +5,15 @@ import java.util.List;
 
 public class Cadastro {
 	
+	public static final int IDADE_MINIMA = 18;
+	
 	protected List<Perfil> listaPerfis = new ArrayList<>();
 	
 	protected List<Curtida> curtidas = new ArrayList<>();
 	
 	protected List<Match> matches = new ArrayList<>();
-	
-	public static final int IDADE_MINIMA = 18;
 		
-	boolean listaVazia = false;
-	
-	
+		
 	public boolean emailExistente(String email) {
 		for (Perfil perfil: listaPerfis) {
 			if (perfil.getEmail().equalsIgnoreCase(email)) {
@@ -139,25 +137,50 @@ public class Cadastro {
 	
 	
 	public void curtir(Perfil origem, Perfil destino) throws NegocioException {
-		if (origem.id == destino.id) {
+		if (origem.getId() == destino.getId()) {
 			throw new NegocioException("Não pode curtir a si mesmo.");
 		}		
+		
+		if (jaCurtiu(origem, destino)) {
+			throw new NegocioException("Já curtiu essa pessoa.");
+		}
+		
+		if(contarCurtidas(origem) >= origem.getPlano().limiteCurtidas()) {
+			throw new NegocioException("Atingiu o limite de curtidas do plano escolhido: " + origem.getPlano().limiteCurtidas());
+		}
+		
+		Curtida curtida = new Curtida(origem, destino);
+		
+		curtidas.add(curtida);
+		
+		if ((jaCurtiu(destino, origem)) && (!existeMatch(origem, destino))) {
+			criarMatch(origem, destino);
+			return true;
+		} else {
+			return false;
+		}
+		
+		
 				
 	}
 	
-	private boolean conferirCurtida(Perfil origem, Perfil destino) {
-		for (Curtida curtidaRepetida: curtidas) {
-			if (curtidaRepetida.id == .id) verificar duplicidade
-			return true;
+	private boolean jaCurtiu(Perfil origem, Perfil destino) {
+		for (Curtida curtida: curtidas) {
+			if (curtida.getOrigem().getId() == origem.getId() &&  curtida.getDestino().getId() == destino.getId()) {
+				return true;
+			}
+			
 		}
+		
 		return false;
 		
 	}
 	
+	
 	private int contarCurtidas(Perfil origem) {
 		int quantidade = 0;
 		for (Curtida curtida: curtidas) {
-			if (curtida.origem == origem) {
+			if (curtida.getOrigem().getId() == origem.getId()) {
 				quantidade++;
 			}
 		}
@@ -166,8 +189,28 @@ public class Cadastro {
 	
 	/*public listarMatches() {
 		
+	}*/
+	
+	private void criarMatch(Perfil p1, Perfil p2) {
+		Match match = new Match(p1, p2);
+		
+		matches.add(match);
+		
 	}
 	
+	private boolean existeMatch(Perfil p1, Perfil p2) {
+		
+		for(Match match: matches) {
+			match.envolve(p2);
+			match.envolve(p1);			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	
+	/*
 	public enviarMensagem() {
 		
 	}

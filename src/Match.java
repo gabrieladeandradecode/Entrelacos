@@ -20,7 +20,7 @@ public class Match {
 		return usuario2;
 	}
 		
-	public boolean envolve(Perfil usuario) {
+	public boolean envolve(Perfil usuario) { //ajuda a checar se um usuário pertence ao match antes de permitir a conversa.
 		if (usuario.getId() == this.usuario1.getId() || usuario.getId() == this.usuario2.getId()) {
 			return true;		
 		}								
@@ -28,6 +28,12 @@ public class Match {
 		return false;
 		
 	}
+	
+	/*
+	 * Para saber se um match é de um par específico, 
+	 * o Cadastro pergunta envolve para os dois perfis. 
+	 * O resultado só é verdadeiro quando ambos pertencem àquele match.
+	 */
 	
 	public void adicionarMensagem(Mensagem mensagem) {
 		mensagens.add(mensagem);
@@ -38,8 +44,13 @@ public class Match {
 		return mensagens;
 	}
 	
-	/*public Perfil parMatch(Perfil usuario2) { 
-		return
-	}*/	
+	public Perfil parMatch(Perfil outroUsuario) {	// A Main usa esse método para escrever "Match com Fulana" na lista de matches e na conversa.
+		if (outroUsuario.getId() == usuario1.getId()) {
+			return usuario2;
+		} else {
+			return usuario1;
+		}
+		
+	}
 	
 }
