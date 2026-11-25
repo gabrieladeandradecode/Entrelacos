@@ -204,7 +204,7 @@ public class Cadastro {
 	
 	private boolean existeMatch(Perfil p1, Perfil p2) {
 		
-		for(Match match: matches) {
+		for(Match match: matches) {			
 			if (match.envolve(p2) && match.envolve(p1)) {
 				return true;
 			}						
@@ -214,15 +214,54 @@ public class Cadastro {
 		return false;
 	}
 	
-	
-	/*
-	public enviarMensagem() {
+	private Match buscarMatch(Perfil p1, Perfil p2) {
+				
+		for (Match match: matches) {
+			if (match.envolve(p1) && match.envolve(p2)) {
+				return match;
+			}			
+		}
 		
+		return null;
 	}
 	
-	public listarMensagens() {
+	
+	
+	public void enviarMensagem(Perfil remetente, Perfil destinatario, String texto) throws NegocioException {
 		
-	}*/
+		if (remetente.getId() == destinatario.getId()) {
+			throw new NegocioException("Não pode enviar mensagem para si mesmo.");
+		}
+		
+		if (texto == null || texto.trim().isEmpty()) {
+			throw new NegocioException("Texto não pode ser vazio!");
+		}
+		
+		Match matchCheck = buscarMatch(remetente, destinatario);
+		
+		if(matchCheck == null) {
+			throw new NegocioException("Não há match entre vocês para iniciar conversa.");
+		}
+		
+		Mensagem mensagem = new Mensagem(remetente, texto);
+		
+		matchCheck.adicionarMensagem(mensagem);
+			
+	}
+	
+	
+	public List<Mensagem> listarMensagens(Perfil p1, Perfil p2) {
+		
+		Match matchMensagem = buscarMatch(p1, p2);
+		
+		if (matchMensagem == null) {
+			return Collections.emptyList();
+		} 
+		
+		return matchMensagem.getMensagens();	
+	
+		
+	}
 		
 	
 }

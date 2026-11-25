@@ -135,17 +135,12 @@ public class Main {
                 }
 
                 case 5 -> {
-                	matches(cadastro, usuarioSelecionado);                    
-                    
-                    
-                    
-                    
-                                        
+                	mostrarMatches(cadastro, usuarioSelecionado);                    
+                                                        
                 }
                 
-                case 6 -> {
-                	System.out.println("Conversar");
-                	conversar();
+                case 6 -> {                	
+                	conversar(cadastro, usuarioSelecionado);
                 }
 
                 case 7 -> {
@@ -212,7 +207,7 @@ public class Main {
 	    int idade = lerInteiro("Idade (mínimo 18): ");   
 	    
         System.out.println("Cidade: ");
-        String cidade = entrada.nextLine();	 	//!!conferir leitura de cidade só string, nao aceitar int                              
+        String cidade = entrada.nextLine();	 	                              
 
 	    System.out.println("""
     			Plano
@@ -298,7 +293,7 @@ public class Main {
 		
 	}
 	
-	private static void matches(Cadastro cadastro, Perfil usuarioSelecionado) {
+	private static void mostrarMatches(Cadastro cadastro, Perfil usuarioSelecionado) {
 		List<Match> listaMachesDoUsuario =  cadastro.listarMatches(usuarioSelecionado);
 		
 		
@@ -309,21 +304,63 @@ public class Main {
 		
 		int i = 0;
 		for (Match match: listaMachesDoUsuario) {
-			match.get(i);
-			//Match match 
-			listaMachesDoUsuario.get(i);
+			System.out.println((i+1) + " - Match com " +match.parMatch(usuarioSelecionado).getNome() );
+			i++;
 		}
 		
 	}
 	
-	private static void conversar() {
-		// TODO Auto-generated method stub
+	private static void conversar(Cadastro cadastro, Perfil usuarioSelecionado) {		
+		
+		if(cadastro.listarMatches(usuarioSelecionado).isEmpty()) {
+			System.out.println("Você ainda não tem matches para conversar.");
+			return;
+		}
+		
+		mostrarMatches(cadastro, usuarioSelecionado);
+		
+		int id = lerInteiro("Digite o id da pessoa com quem quer conversar: ");
+		Perfil perfilConversa = cadastro.buscarPorId(id);
+		
+		if (perfilConversa == null) {
+    		System.out.println("Perfil não encontrado.");
+    		return;
+    	}	
+		
+		if (usuarioSelecionado.getId() == perfilConversa.getId()) {
+			System.out.println("Não pode enviar mensagem para si mesmo.");
+			return;
+		}
+				
+			
+		mostrarConversa(cadastro, usuarioSelecionado, perfilConversa);
+		
+		System.out.println("Digite a mensagem: ");
+		String texto = entrada.nextLine().trim();
+		
+		try {			
+			cadastro.enviarMensagem(usuarioSelecionado, perfilConversa, texto);			
+			mostrarConversa(cadastro, usuarioSelecionado, perfilConversa);
+		} catch (NegocioException e) {
+			System.out.println(e.getMessage());
+		}
+				
+	}
+	
+	private static void mostrarConversa(Cadastro cadastro, Perfil usuarioSelecionado, Perfil perfilConversa) {
+		
+		List<Mensagem> mensagens = cadastro.listarMensagens(usuarioSelecionado, perfilConversa);
+		
+		if (mensagens.isEmpty()) {
+			System.out.println("Nenhuma mensagem ainda.");
+		} else {
+			for(Mensagem mensagem: mensagens) {
+				System.out.println(mensagem);
+			}								
+		}			
+		
 		
 	}
 	  	    
 	        		
-}	 // fechamento do Main()
-
-
-
-
+}	 
