@@ -3,8 +3,7 @@ import java.util.Scanner;
 
 public class Main {
 	
-	static Scanner entrada = new Scanner(System.in);
-	
+	static Scanner entrada = new Scanner(System.in);	
 	
 	public static void main(String[] args) {
 	
@@ -18,7 +17,7 @@ public class Main {
 	
 	        switch (opcaoTela) {
 		        case 1 -> {
-		        	
+		        	// Faz cadastro
 		        	try {
 	                    cadastrar(cadastro);
 	                    System.out.println("Perfil cadastrado!");
@@ -30,7 +29,7 @@ public class Main {
 		        }
 		        
 	            case 2 -> {	   
-	            	
+	            	// Entra por id
 	            	if(cadastro.conferirListaVazia()) {
 	            		System.out.println("Nenhum perfil cadastrado.");
 	            		continue;
@@ -304,7 +303,7 @@ public class Main {
 		
 		int i = 0;
 		for (Match match: listaMachesDoUsuario) {
-			System.out.println((i+1) + " - Match com " +match.parMatch(usuarioSelecionado).getNome() );
+			System.out.println((i+1) + " - Match com " +match.parMatch(usuarioSelecionado).getNome() + " (id: " + match.parMatch(usuarioSelecionado).getId() + ")");
 			i++;
 		}
 		

@@ -6,16 +6,16 @@ public abstract class Plano {
 		this.nome = nome;
 	}
 	
-	public String getNome(String nome) {
+	public String getNome() {
 		return nome;
 	}
 		
 	public abstract int limiteCurtidas();
 	
-	/*@Override
+	@Override
 	public String toString() {
 		return nome;
 		
-	}*/
+	}
 
 }

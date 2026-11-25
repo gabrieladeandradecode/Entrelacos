@@ -15,11 +15,13 @@ public class Cadastro {
 		
 		
 	public boolean emailExistente(String email) {
+		
 		for (Perfil perfil: listaPerfis) {
 			if (perfil.getEmail().equalsIgnoreCase(email)) {
 				return true;
 			}						
 		}
+		
 		return false;		
 	}
 	
@@ -58,7 +60,7 @@ public class Cadastro {
 	}
 	
 	
-	public Perfil buscarPorId(int id) {
+	public Perfil buscarPorId(int id) {		
 		for (Perfil perfil: listaPerfis) {
 			if (perfil.getId() == id) {
 				return perfil;
@@ -73,7 +75,7 @@ public class Cadastro {
 	}
 	
 	
-	public List<Perfil> listarPerfis() {	// para todos usuários inclusive o selecionado
+	public List<Perfil> listarPerfis() {	// para todos usuários inclusive o selecionado quando usuario entra com id 
 				
 		if (conferirListaVazia()){
 			return Collections.emptyList();
@@ -140,7 +142,7 @@ public class Cadastro {
 		
 		if(contarCurtidas(origem) >= origem.getPlano().limiteCurtidas()) {
 			throw new NegocioException("Atingiu o limite de curtidas do plano escolhido: " + origem.getPlano().limiteCurtidas());
-		}										//pôr nome? origem.getPlano().getNome() - consertar classe Plano nome 
+		}										 
 		
 		Curtida curtida = new Curtida(origem, destino);
 		
