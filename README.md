@@ -44,7 +44,7 @@ Armazenamento: Dados mantidos em memória durante a execução.
 
 
 
-Certifique-se de ter o Java 24 instalado.
+Certifique-se de ter o Java 21 instalado.
 
 
 Baixe ou clone este repositório.
