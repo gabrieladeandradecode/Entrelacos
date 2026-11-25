@@ -117,66 +117,27 @@ Troca de mensagens entre usuários que possuem match.
 🧩 Organização das classes
 
 
-O projeto foi estruturado em 12 classes, com responsabilidades específicas:
 
+O projeto foi estruturado em 12 classes, com responsabilidades específicas: 
 
+ 
 
+| Classe | Responsabilidade |
+|---|---|
+| `Main` | Controla a interação com o usuário por meio dos menus do console. |
+| `Perfil` | Representa os usuários cadastrados e armazena seus dados e interesses. |
+| `Cadastro` | Gerencia os perfis, curtidas, matches, pesquisas e envio de mensagens. |
+| `Plano` | Classe abstrata que define a estrutura dos planos e o limite de curtidas. |
+| `PlanoEssencial` | Implementa o plano Essencial, com limite de duas curtidas. |
+| `PlanoConexao` | Implementa o plano Conexão, com limite de cinco curtidas. |
+| `Interesse` | Representa os interesses disponíveis em um catálogo compartilhado. |
+| `Curtida` | Registra o perfil que enviou a curtida e o perfil que a recebeu. |
+| `Match` | Representa a conexão entre dois perfis e armazena as mensagens da conversa. |
+| `Mensagem` | Armazena o remetente e o conteúdo de cada mensagem. |
+| `ValidacaoEmail` | Verifica se o endereço de e-mail possui um formato válido. |
+| `NegocioException` | Define exceções personalizadas para o tratamento de regras de negócio. | 
 
-Classe
-Responsabilidade
-
-
-
-
-Main
-Controla a interação com o usuário por meio dos menus do console.
-
-
-Perfil
-Representa os usuários cadastrados e armazena seus dados e interesses.
-
-
-Cadastro
-Gerencia os perfis, curtidas, matches, pesquisas e envio de mensagens.
-
-
-Plano
-Classe abstrata que define a estrutura dos planos e o limite de curtidas.
-
-
-PlanoEssencial
-Implementa o plano Essencial, com limite de duas curtidas.
-
-
-PlanoConexao
-Implementa o plano Conexão, com limite de cinco curtidas.
-
-
-Interesse
-Representa os interesses disponíveis em um catálogo compartilhado.
-
-
-Curtida
-Registra o perfil que enviou a curtida e o perfil que a recebeu.
-
-
-Match
-Representa a conexão entre dois perfis e armazena as mensagens da conversa.
-
-
-Mensagem
-Armazena o remetente e o conteúdo de cada mensagem.
-
-
-ValidacaoEmail
-Verifica se o endereço de e-mail possui um formato válido.
-
-
-NegocioException
-Define exceções personalizadas para o tratamento de regras de negócio.
-
-
-
+ 
 
 🧪 Testes realizados
 
