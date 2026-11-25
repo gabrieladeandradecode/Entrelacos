@@ -28,7 +28,7 @@ Turma: Programação de Soluções Computacionais (2026.2 – 4ª feira – manh
 Linguagem: Java
 
 
-Versão: Java 24
+Versão: Java 21.0.7
 
 
 Interface: Console (terminal)
@@ -153,19 +153,19 @@ Cadastro e validações
 
 
 
-Cadastro válido.
+- Cadastro válido.
 
 
-Verificação da idade mínima de 18 anos.
+- Verificação da idade mínima de 18 anos.
 
 
-Impedimento de cadastro com nome ou cidade vazios.
+- Impedimento de cadastro com nome ou cidade vazios.
 
 
-Validação de e-mail inválido.
+- Validação de e-mail inválido.
 
 
-Impedimento de cadastro com e-mail duplicado.
+- Impedimento de cadastro com e-mail duplicado.
 
 
 
@@ -175,10 +175,10 @@ Interesses
 
 
 
-Adição de interesses ao perfil.
+- Adição de interesses ao perfil.
 
 
-Verificação do limite máximo de três interesses.
+- Verificação do limite máximo de três interesses.
 
 
 
@@ -188,22 +188,22 @@ Curtidas e matches
 
 
 
-Curtir outro perfil.
+- Curtir outro perfil.
 
 
-Impedimento de curtida no próprio perfil.
+- Impedimento de curtida no próprio perfil.
 
 
-Impedimento de curtida duplicada.
+- Impedimento de curtida duplicada.
 
 
-Verificação dos limites de curtidas de cada plano.
+- Verificação dos limites de curtidas de cada plano.
 
 
-Criação de match após curtidas recíprocas.
+- Criação de match após curtidas recíprocas.
 
 
-Verificação de que não ocorre match sem curtida recíproca.
+- Verificação de que não ocorre match sem curtida recíproca.
 
 
 
@@ -213,16 +213,16 @@ Mensagens e pesquisas
 
 
 
-Envio de mensagem após a formação de um match.
+- Envio de mensagem após a formação de um match.
 
 
-Impedimento de envio de mensagem vazia.
+- Impedimento de envio de mensagem vazia.
 
 
-Impedimento de envio de mensagem sem match.
+- Impedimento de envio de mensagem sem match.
 
 
-Listagem e pesquisa de perfis.
+- Listagem e pesquisa de perfis.
 
 
 
