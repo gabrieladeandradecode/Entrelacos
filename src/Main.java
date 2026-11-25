@@ -31,7 +31,10 @@ public class Main {
 		        
 	            case 2 -> {	   
 	            	
-	            	
+	            	if(cadastro.conferirListaVazia()) {
+	            		System.out.println("Nenhum perfil cadastrado.");
+	            		continue;
+	            	}
                 	
                 	for (Perfil perfil: cadastro.listarPerfis()) {
                 		System.out.println(perfil.getId() + " - "+ perfil.getNome());
@@ -127,13 +130,17 @@ public class Main {
                 }
                 
                 case 4 -> {
-                	System.out.println("Curtir");
-                	//curtirPerfil(Cadastro, usuarioSelecionado);
+                	
+                	curtirPerfil(cadastro, usuarioSelecionado);
                 }
 
                 case 5 -> {
-                    System.out.println("Matches");
-                    // Implementar funcionalidade
+                	matches(cadastro, usuarioSelecionado);                    
+                    
+                    
+                    
+                    
+                                        
                 }
                 
                 case 6 -> {
@@ -169,17 +176,6 @@ public class Main {
 		for (Perfil perfil : listaPerfis) {
 			System.out.println(perfil);
 		}				
-		
-	}
-	
-
-	private static void curtirPerfil() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	private static void conversar() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -220,8 +216,8 @@ public class Main {
 
 	    System.out.println("""
     			Plano
-    			1. Essencial
-    			2. Conexão    			
+    			1. Essencial (até 2 curtidas)
+    			2. Conexão (até 5 curtidas)
     			""");
 	    int opcaoPlano = lerInteiro("Escolha o plano e digite 1 ou 2:");
 	    
@@ -267,6 +263,62 @@ public class Main {
 						
 		}
 				
+	}
+	
+	
+	private static void curtirPerfil(Cadastro cadastro, Perfil usuarioSelecionado) {
+				
+		List<Perfil> outrosPerfis = cadastro.listarOutrosPerfis(usuarioSelecionado); 
+		
+		if (outrosPerfis.isEmpty()){
+    		System.out.println("Não há outros perfis para curtir..");
+    		return;
+    	} 
+		
+		mostrarPerfis(outrosPerfis);		
+		
+		int id = lerInteiro("Digite o id da pessoa para curtir");
+		Perfil perfilCurtido = cadastro.buscarPorId(id);
+		
+    	if (perfilCurtido == null) {
+    		System.out.println("Perfil não encontrado.");
+    		return;
+    	}
+    	
+    	try {    		
+    		boolean curtida = cadastro.curtir(usuarioSelecionado, perfilCurtido);
+    		if (curtida) {
+    			System.out.println("Deu match com " + perfilCurtido.getNome() + "!");
+    		} else {
+    			System.out.println("Perfil curtido!");
+    		}
+		} catch (NegocioException e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	
+	private static void matches(Cadastro cadastro, Perfil usuarioSelecionado) {
+		List<Match> listaMachesDoUsuario =  cadastro.listarMatches(usuarioSelecionado);
+		
+		
+		if (listaMachesDoUsuario.isEmpty()){
+    		System.out.println("Você ainda não tem matches.");
+    		return;
+    	}
+		
+		int i = 0;
+		for (Match match: listaMachesDoUsuario) {
+			match.get(i);
+			//Match match 
+			listaMachesDoUsuario.get(i);
+		}
+		
+	}
+	
+	private static void conversar() {
+		// TODO Auto-generated method stub
+		
 	}
 	  	    
 	        		

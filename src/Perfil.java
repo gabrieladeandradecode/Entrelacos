@@ -80,11 +80,12 @@ public class Perfil {
     public String toString() {
     	String textoInteresse = "";
     	for (int i = 0; i < quantidadeInteresse; i++) {
-    	    textoInteresse += " - " + interesses[i].getNomeDoInteresse() + "\n";	//tirar \n devido a quebra de linha?
+    	    textoInteresse += " - " + interesses[i].getNomeDoInteresse() + "\n";	
     	}
     	
     	return """                
                --- PERFIL --- 
+               Id: %d
                Nome: %s
                Email: %s
                Idade: %d
@@ -92,7 +93,7 @@ public class Perfil {
                Plano: %s
                Interesses: 
                %s
-               --------------------""".formatted(nome, email, idade, cidade, plano, textoInteresse);    	
+               --------------------""".formatted(id, nome, email, idade, cidade, plano, textoInteresse);    	
     		// 
     }
     

@@ -87,11 +87,11 @@ public class Cadastro {
 						
 	}
 	
-	public List<Perfil> listarOutrosPerfis(Perfil perfilId){	
+	public List<Perfil> listarOutrosPerfis(Perfil usuario){	
 				
 		List<Perfil> copiaListaOutrosPerfis = new ArrayList<>(listaPerfis);
 		
-		copiaListaOutrosPerfis.removeIf(perfil -> perfil.getId() == perfilId.getId());
+		copiaListaOutrosPerfis.removeIf(perfil -> perfil.getId() == usuario.getId());
 		
 		Collections.sort(copiaListaOutrosPerfis, Comparator.comparing(Perfil::getNome, String.CASE_INSENSITIVE_ORDER));				
 		
@@ -100,11 +100,7 @@ public class Cadastro {
 	}
 	
 	
-	public List<Perfil> pesquisar(String nome) {
-				
-		if (conferirListaVazia()){
-			return Collections.emptyList();
-		};
+	public List<Perfil> pesquisar(String nome) {			
 		
 		List<Perfil> listaNomes = new ArrayList<>();
 		
@@ -119,12 +115,9 @@ public class Cadastro {
 	
 	
 	public List<Perfil> pesquisar(String nome, String cidade) {
+		
 		List<Perfil> listaNomesCidades = new ArrayList<>();
-		
-		if (conferirListaVazia()){
-			return Collections.emptyList();
-		};
-		
+				
 		for (Perfil perfil: listaPerfis) {
 			if (perfil.getNome().equalsIgnoreCase(nome) && perfil.getCidade().equalsIgnoreCase(cidade)) {
 				listaNomesCidades.add(perfil);
@@ -136,7 +129,7 @@ public class Cadastro {
 	
 	
 	
-	public void curtir(Perfil origem, Perfil destino) throws NegocioException {
+	public boolean curtir(Perfil origem, Perfil destino) throws NegocioException {
 		if (origem.getId() == destino.getId()) {
 			throw new NegocioException("Não pode curtir a si mesmo.");
 		}		
@@ -147,7 +140,7 @@ public class Cadastro {
 		
 		if(contarCurtidas(origem) >= origem.getPlano().limiteCurtidas()) {
 			throw new NegocioException("Atingiu o limite de curtidas do plano escolhido: " + origem.getPlano().limiteCurtidas());
-		}
+		}										//pôr nome? origem.getPlano().getNome() - consertar classe Plano nome 
 		
 		Curtida curtida = new Curtida(origem, destino);
 		
@@ -156,12 +149,11 @@ public class Cadastro {
 		if ((jaCurtiu(destino, origem)) && (!existeMatch(origem, destino))) {
 			criarMatch(origem, destino);
 			return true;
-		} else {
-			return false;
 		}
 		
-		
+		return false;
 				
+						
 	}
 	
 	private boolean jaCurtiu(Perfil origem, Perfil destino) {
@@ -187,9 +179,21 @@ public class Cadastro {
 		return quantidade;
 	}
 	
-	/*public listarMatches() {
+	public List<Match> listarMatches(Perfil usuario) {
+		List<Match> listaMatchesDoUsuario = new ArrayList<>();
 		
-	}*/
+		for (Match match: matches) {
+			if (match.envolve(usuario)) {
+				listaMatchesDoUsuario.add(match);
+			}
+			
+			
+		}
+		
+		return listaMatchesDoUsuario;
+		
+	}		
+			
 	
 	private void criarMatch(Perfil p1, Perfil p2) {
 		Match match = new Match(p1, p2);
@@ -201,9 +205,10 @@ public class Cadastro {
 	private boolean existeMatch(Perfil p1, Perfil p2) {
 		
 		for(Match match: matches) {
-			match.envolve(p2);
-			match.envolve(p1);			
-			return true;
+			if (match.envolve(p2) && match.envolve(p1)) {
+				return true;
+			}						
+			
 		}
 		
 		return false;

@@ -44,8 +44,8 @@ public class Match {
 		return mensagens;
 	}
 	
-	public Perfil parMatch(Perfil outroUsuario) {	// A Main usa esse método para escrever "Match com Fulana" na lista de matches e na conversa.
-		if (outroUsuario.getId() == usuario1.getId()) {
+	public Perfil parMatch(Perfil usuario) {	// A Main usa esse método para escrever "Match com Fulana" na lista de matches e na conversa.
+		if (usuario.getId() == usuario1.getId()) {
 			return usuario2;
 		} else {
 			return usuario1;
