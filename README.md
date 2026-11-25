@@ -65,6 +65,7 @@ Pelo terminal, caso todos os arquivos estejam no mesmo diretório:
 
 
 javac *.java
+
 java Main
 
 
